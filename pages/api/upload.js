@@ -1,5 +1,6 @@
 import nc from "next-connect";
 import onError from "../../common/errormiddleware";
+const path = require('path');
 var multer = require("multer");
 var multerGoogleStorage = require("multer-google-storage");
 export const config = {
@@ -18,7 +19,7 @@ let uploadFile = multer({
             autoRetry: true,
             bucket: process.env.BUCKET_NAME,
             projectId: process.env.PROJECT_ID,
-            keyFilename: "api-project-119539854242-394c3e4dbbe7.json",
+            keyFilename: path.join(__dirname,"../google-cloud.json"),
             filename: (req, file, cb) => {
                 fileName=`/${Date.now()}_${file.originalname}`;
                 cb(null, fileName);
