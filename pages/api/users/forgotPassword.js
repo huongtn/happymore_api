@@ -1,6 +1,7 @@
 import dbConnect from '../../../utils/db_connect';
-import dbContext from '../../../models/db_context'; 
-import { sendSMS } from '../../../utils/twilio_client';
+import dbContext from '../../../models/db_context';  
+
+import { sendEmail } from '../../../utils/email_client';
 dbConnect();
 
 const handler = async (req, res) => {
@@ -21,12 +22,12 @@ const handler = async (req, res) => {
     }
     else { 
         const code = Math.floor(100000 + Math.random() * 900000);
-        sendSMS(req.body.phoneNumber, code);
+        sendEmail(req.body.phoneNumber,"Happy more code forgot password", code);
         user.code = code;
         user.codeExpires= new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
         await user.save({ validateBeforeSave: false });
         res.json({
-            message: "please check your otp"
+            message: "please check your email"
         });
     }
 };

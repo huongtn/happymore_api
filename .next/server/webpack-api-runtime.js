@@ -147,7 +147,7 @@
 /******/ 		__webpack_require__.f.require = (chunkId, promises) => {
 /******/ 			// "1" is the signal for "already loaded"
 /******/ 			if(!installedChunks[chunkId]) {
-/******/ 				if("pages/api/users/signUp" == chunkId) {
+/******/ 				if("pages/api/users/myAgents" == chunkId) {
 /******/ 					installChunk(require("./" + __webpack_require__.u(chunkId)));
 /******/ 				} else installedChunks[chunkId] = 1;
 /******/ 			}

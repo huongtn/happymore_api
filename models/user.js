@@ -64,7 +64,6 @@ module.exports = (mongoose) => {
       },
       photo: {
         type: String,
-        default: '',
       },
       icNumber: {
         type: String
@@ -104,11 +103,12 @@ module.exports = (mongoose) => {
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
   );
-  userSchema.pre(/^find/, function (next) {
-    // This points to the current query
-    this.find({ active: { $ne: false } });
-    next();
-  });
+
+  // userSchema.pre(/^find/, function (next) {
+  //   // This points to the current query
+  //   this.find({ active: { $ne: false } });
+  //   next();
+  // });
 
   userSchema.methods.createAuthToken = function () {
     const authToken = crypto.randomBytes(3).toString('hex');

@@ -1,8 +1,7 @@
 import dbConnect from '../../../utils/db_connect';
-import dbContext from '../../../models/db_context'; 
+import dbContext from '../../../models/db_context';
 
 import jwt from 'jsonwebtoken'
-import { sendSMS } from '../../../utils/twilio_client';
 dbConnect();
 
 const handler = async (req, res) => {
@@ -18,7 +17,7 @@ const handler = async (req, res) => {
         if (user.codeExpires < new Date()) {
             return res
                 .status(400)
-                .json({message: 'The code already expired!' });
+                .json({ message: 'The code already expired!' });
         }
         else {
             let token = jwt.sign(
@@ -28,7 +27,7 @@ const handler = async (req, res) => {
             );
             user.authLoginToken = token;
             user.code = '';
-            user.active=true;
+            user.active = true;
             await user.save({ validateBeforeSave: false });
             res.json({ token });
         }
