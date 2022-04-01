@@ -24,25 +24,33 @@ const handler = async (req, res) => {
   for (let f of agents.F1) {
     const fs = await dbContext.User.find({ parentAgentCode: f.agentCode });
     if (fs.length > 0) {
-      agents.F2.push(fs);
+      for (let ff of fs) {
+          agents.F2.push(ff);
+      }
     }
   }
-  for (let f of agents.F2) {
+  for (let f of agents.F2) { 
     const fs = await dbContext.User.find({ parentAgentCode: f.agentCode });
     if (fs.length > 0) {
-      agents.F3.push(fs);
+      for (let ff of fs) {
+        agents.F3.push(ff);
+    }
     }
   }
   for (let f of agents.F3) {
     const fs = await dbContext.User.find({ parentAgentCode: f.agentCode });
     if (fs.length > 0) {
-      agents.F4.push(fs);
+      for (let ff of fs) {
+        agents.F4.push(ff);
+    }
     }
   }
   for (let f of agents.F4) {
     const fs = await dbContext.User.find({ parentAgentCode: f.agentCode });
     if (fs.length > 0) {
-      agents.F5.push(fs);
+      for (let ff of fs) {
+        agents.F5.push(ff);
+    }
     }
   }
   return res

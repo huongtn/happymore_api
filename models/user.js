@@ -100,6 +100,19 @@ module.exports = (mongoose) => {
       },
       refreshTokens: [refreshToken],
       addresses: [addressSchema],
+      // Tổng doanh số
+      totalSales: {
+        type: Number,
+        default: 0,
+      },
+      totalIncome: {
+        type: Number,
+        default: 0,
+      },
+      unpaidIncome: {
+        type: Number,
+        default: 0,
+      },
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
   );
