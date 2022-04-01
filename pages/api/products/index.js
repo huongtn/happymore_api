@@ -14,10 +14,22 @@ const handler = async (req, res) => {
       });
     case "GET": 
       if (!id) {
-        const products = await dbContext.Product.find({});
-        return res
-          .status(200)
-          .json(products);
+
+        try {
+        
+          const products = await dbContext.Product.find({});
+          return res
+            .status(200)
+            .json(products);
+        } catch (error) { 
+          return res
+          .status(500)
+          .json(error);
+          // expected output: ReferenceError: nonExistentFunction is not defined
+          // Note - error messages will vary depending on browser
+        }
+
+        
       }
       else
       {
