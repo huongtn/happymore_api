@@ -3,6 +3,7 @@ import dbContext from '../../../models/db_context';
 import { makeSalt, encryptPassword } from '../../../utils/crypto_password'  
 
 import { sendEmail } from '../../../utils/email_client';
+import {generateVerifyCode} from '../../../utils/generate_code';
 dbConnect();
 
 const handler = async (req, res) => {
@@ -36,7 +37,7 @@ const handler = async (req, res) => {
                     });
                 }
                 else {
-                    const code = Math.floor(100000 + Math.random() * 900000);
+                    const code = generateVerifyCode(req.body.email);
                     sendEmail(req.body.email, "Happy more code", code);
                     user.code = code;
                     user.codeExpires= new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))

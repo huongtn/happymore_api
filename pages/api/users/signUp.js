@@ -2,7 +2,7 @@ import dbConnect from '../../../utils/db_connect';
 import dbContext from '../../../models/db_context';
 import { makeSalt, encryptPassword } from '../../../utils/crypto_password'
 import { sendEmail } from '../../../utils/email_client';
-import { generate } from '../../../utils/generate_code';
+import { generate ,generateVerifyCode} from '../../../utils/generate_code'; 
 dbConnect();
 
 const handler = async (req, res) => {
@@ -29,7 +29,7 @@ const handler = async (req, res) => {
                     next(encryptErr);
                 }
                 req.body.password = hashedPassword;
-                const code = Math.floor(100000 + Math.random() * 900000);
+                const code =generateVerifyCode(req.body.email);
                 sendEmail(req.body.email, "Happy more code", code);
                 user = await dbContext.User.create({
                     email: req.body.email,
