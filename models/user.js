@@ -26,12 +26,22 @@ module.exports = (mongoose) => {
       type: Number
     }
   });
+  const bankAcountSchema = new mongoose.Schema({
+    bankName: {
+      type: String
+    },
+    accountNumber: {
+      type: String
+    },
+    accountName: {
+      type: String
+    },
+    branch: {
+      type: String
+    }
+  });
   const userSchema = new mongoose.Schema(
     {
-      name: {
-        type: String,
-        trim: true,
-      },
       fullName: {
         type: String
       },
@@ -99,7 +109,8 @@ module.exports = (mongoose) => {
         select: false,
       },
       refreshTokens: [refreshToken],
-      addresses: [addressSchema],
+      address: [addressSchema],
+      bankAccount: bankAcountSchema,
       // Tổng doanh số
       totalSales: {
         type: Number,
