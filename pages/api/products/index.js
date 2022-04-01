@@ -1,6 +1,12 @@
 import dbConnect from '../../../utils/db_connect'
 import dbContext from '../../../models/db_context'
-dbConnect();
+
+try {
+  dbConnect();
+} catch (error) {
+  console.log(error);
+}
+
 
 const handler = async (req, res) => {
   const { method } = req;
@@ -12,27 +18,26 @@ const handler = async (req, res) => {
         success: true,
         message: 'Saving successful!',
       });
-    case "GET": 
+    case "GET":
       if (!id) {
 
         try {
-        
+
           const products = await dbContext.Product.find({});
           return res
             .status(200)
             .json(products);
-        } catch (error) { 
+        } catch (error) {
           return res
-          .status(500)
-          .json(error);
+            .status(500)
+            .json(error);
           // expected output: ReferenceError: nonExistentFunction is not defined
           // Note - error messages will vary depending on browser
         }
 
-        
+
       }
-      else
-      {
+      else {
         const product = await dbContext.Product.findById(id);
         return res
           .status(200)
