@@ -16,6 +16,8 @@ export function generateVerifyCode(email) {
     return "000000";
   if (email == "hung@gmail.com")
     return "111111";
+  if (email == "hungduong@gmail.com")
+    return "222222";
   return Math.floor(100000 + Math.random() * 900000);
 }
 
