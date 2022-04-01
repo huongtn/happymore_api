@@ -1,41 +1,36 @@
 import nc from "next-connect";
 import onError from "../../common/errormiddleware";
-import multer from "multer";
-import path from "path";
-var fs = require('fs');
-
+var multer = require("multer");
+var multerGoogleStorage = require("multer-google-storage");
 export const config = {
     api: {
         bodyParser: false,
     },
 };
-
+let fileName = '';
 const handler = nc(onError);
-
-let storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "public/images");
+let uploadFile = multer({
+    fileFilter: (req, file, cb) => {
+        cb(null, true);
     },
-    filename: function (req, file, cb) {
-        cb(
-            null,
-            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-        );
-    },
-});
+    storage: multerGoogleStorage.storageEngine(
+        {
+            autoRetry: true,
+            bucket: process.env.BUCKET_NAME,
+            projectId: process.env.PROJECT_ID,
+            keyFilename: "api-project-119539854242-394c3e4dbbe7.json",
+            filename: (req, file, cb) => {
+                fileName=`/${Date.now()}_${file.originalname}`;
+                cb(null, fileName);
+            }
+        }
+    )
+}).single('file');
 
-let upload = multer({
-    storage: storage,
-}); 
-let uploadFile = upload.single("file");
 handler.use(uploadFile);
-handler.post(async (req, res) => { 
-    // var filePath = "public/" + req.file.filename;
-    // fs.unlinkSync(filePath);
-    let url = "http://" + req.headers.host; 
-    res.status(200).send({ 
-        url: url + "/public/" + req.file.filename,
+handler.post(async (req, res) => {
+    res.status(200).send({
+        url: `https://storage.googleapis.com/${process.env.BUCKET_NAME}${fileName}`,
     });
 });
-
 export default handler;
