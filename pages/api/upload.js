@@ -19,11 +19,7 @@ let uploadFile = multer({
             autoRetry: true,
             bucket: process.env.BUCKET_NAME,
             projectId: process.env.PROJECT_ID,
-            credentials: {
-                client_email: process.env.CLIENT_EMAIL,
-                private_key: process.env.PRIVATE_KEY
-              },
-            //keyFilename: path.join(__dirname,"../../google-cloud.json"),
+            keyFilename: path.resolve('./google_key.json'),
             filename: (req, file, cb) => {
                 fileName=`/${Date.now()}_${file.originalname}`;
                 cb(null, fileName);
