@@ -24,7 +24,7 @@ const handler = async (req, res) => {
       if (!id) { 
         try {  
           const condition = (req.user.role === constants.RoleAgent && req.user.gender) ? {gender:req.user.gender}:{};
-          console.log(condition);
+        
           const trainings = await dbContext.Training.find(condition);
           return res
             .status(200)
