@@ -26,6 +26,7 @@ const handler = async (req, res) => {
             user.icPhotos = req.body.icPhotos;
             user.address = req.body.address;
             user.bankAccount = req.body.bankAccount;
+            user.gender = req.body.gender;
             await user.save({ validateBeforeSave: false });
             res.json({
                 message: "update successful!"
