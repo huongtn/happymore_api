@@ -21,7 +21,7 @@ const handler = async (req, res) => {
     }
     else {
         try {
-            makeSalt(function (saltErr, salt) {
+            makeSalt(function (saltErr,salt) {
                 if (saltErr) {
                     next(saltErr);
                 }
@@ -30,20 +30,20 @@ const handler = async (req, res) => {
                         next(encryptErr);
                     }
                     req.body.password = hashedPassword;
-                    const code = generateVerifyCode(req.body.email);
-
-                    sendEmail(req.body.email, "Happy more code", code);
+                    const code = generateVerifyCode(req.body.email); 
+                    const agentCode =  generate(6);
+                    //sendEmail(req.body.email, "Happy more code", code);
 
                     user = await dbContext.User.create({
                         email: req.body.email,
                         password: req.body.password,
-                        agentCode: generate(6),
+                        agentCode,
                         parentAgentCode: req.body.parentAgentCode,
-                        code: code,
+                        code,
                         codeExpires: new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
                     });
                     await user.save({ validateBeforeSave: false }); 
-                    return res.json({
+                    res.json({
                         message: "please check your email"
                     });
                 });

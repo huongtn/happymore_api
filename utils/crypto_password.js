@@ -7,6 +7,7 @@ export function encryptPassword(password, callback) {
     var defaultIterations = 10000;
     var defaultKeyLength = 64;
     var salt = Buffer.from(process.env.JWT_SECRET, 'base64'); 
+    console.log(salt.toString());
     if (!callback) {
         return crypto.pbkdf2Sync(password, salt, defaultIterations, defaultKeyLength)
             .toString('base64');
