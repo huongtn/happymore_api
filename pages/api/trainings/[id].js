@@ -28,7 +28,7 @@ const handler = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: 'Saving successful!',
-      });;
+      });
     case "DELETE":
       await dbContext.Training.deleteOne({ _id: id });
       return res.status(200).json({
