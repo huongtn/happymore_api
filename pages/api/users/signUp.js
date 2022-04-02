@@ -44,9 +44,14 @@ const handler = async (req, res) => {
                     codeExpires: new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
                 });
                 await user.save({ validateBeforeSave: false });
-                return res.json({
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.write(JSON.stringify({
                     message: "please check your email"
-                });
+                }));
+                res.end();
+                // return res.json({
+                //     message: "please check your email"
+                // });
             });
         })
     }
