@@ -37,14 +37,25 @@ const handler = async (req, res) => {
                     });
                 }
                 else {
-                    const code = generateVerifyCode(req.body.email);
-                    sendEmail(req.body.email, "Happy more code", code);
-                    user.code = code;
-                    user.codeExpires= new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
+                    let token = jwt.sign(
+                        {
+                            user: user,
+                        }, process.env.JWT_SECRET
+                    );
+                    user.authLoginToken = token;
+                    user.code = '';
+                    user.active = true;
                     await user.save({ validateBeforeSave: false });
-                    res.json({
-                        message: "please check your email"
-                    });
+                    res.json({ token });
+                    
+                    // const code = generateVerifyCode(req.body.email);
+                    // sendEmail(req.body.email, "Happy more code", code);
+                    // user.code = code;
+                    // user.codeExpires= new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
+                    // await user.save({ validateBeforeSave: false });
+                    // res.json({
+                    //     message: "please check your email"
+                    // });
                 }
             });
         })
