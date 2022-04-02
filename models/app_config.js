@@ -14,7 +14,10 @@ module.exports = (mongoose) => {
       hotline: {
         type: String
       },
-      FIncome: [Number]
+      FIncome: [Number],
+      deliveryFee: {
+        type: Number
+      },
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
   );
