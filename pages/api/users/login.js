@@ -2,8 +2,7 @@ import dbConnect from '../../../utils/db_connect';
 import dbContext from '../../../models/db_context'; 
 import { makeSalt, encryptPassword } from '../../../utils/crypto_password'  
 
-import { sendEmail } from '../../../utils/email_client';
-import {generateVerifyCode} from '../../../utils/generate_code';
+import jwt from 'jsonwebtoken'  
 dbConnect();
 
 const handler = async (req, res) => {
@@ -47,7 +46,7 @@ const handler = async (req, res) => {
                     user.active = true;
                     await user.save({ validateBeforeSave: false });
                     res.json({ token });
-                    
+
                     // const code = generateVerifyCode(req.body.email);
                     // sendEmail(req.body.email, "Happy more code", code);
                     // user.code = code;
