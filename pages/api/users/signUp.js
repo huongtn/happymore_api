@@ -32,7 +32,7 @@ const handler = async (req, res) => {
                     req.body.password = hashedPassword;
                     const code = generateVerifyCode(req.body.email); 
                     const agentCode =  generate(6);
-                    //sendEmail(req.body.email, "Happy more code", code);
+                    sendEmail(req.body.email, "Happy more code", code);
 
                     user = await dbContext.User.create({
                         email: req.body.email,

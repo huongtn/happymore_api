@@ -18,6 +18,6 @@ export function generateVerifyCode(email) {
     return "111111";
   if (email == "hungduong@gmail.com")
     return "222222";
-  return Math.floor(100000 + Math.random() * 900000);
+  return (Math.floor(100000 + Math.random() * 900000)).toString();
 }
 

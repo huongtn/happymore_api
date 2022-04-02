@@ -24,7 +24,7 @@ const handler = async (req, res) => {
     }
     else { 
         const code = generateVerifyCode(req.body.email);
-        //sendEmail(req.body.phoneNumber,"Happy more code forgot password", code);
+        sendEmail(req.body.phoneNumber,"Happy more code forgot password", code);
         user.code = code;
         user.codeExpires= new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
         await user.save({ validateBeforeSave: false });
