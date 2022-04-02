@@ -2,12 +2,12 @@ var crypto = require('crypto');
 
 const saltv = process.env.JWT_SECRET;
 export function encryptPassword(password, callback) {
-    if (!password || !saltv) {
+    if (!password) {
         return null;
     }
     var defaultIterations = 10000;
     var defaultKeyLength = 64;
-    var salt = new Buffer(saltv, 'base64');
+    var salt = Buffer.from(saltv, 'base64');
     console.log(salt);
     if (!callback) {
         return crypto.pbkdf2Sync(password, salt, defaultIterations, defaultKeyLength)
