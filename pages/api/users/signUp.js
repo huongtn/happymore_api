@@ -34,10 +34,7 @@ const handler = async (req, res) => {
                     sendEmail(req.body.email, "Happy more code", code);
                 } catch (error) {
                     console.log(error);
-                }
-
-
-
+                } 
                 user = await dbContext.User.create({
                     email: req.body.email,
                     password: req.body.password,
@@ -47,7 +44,7 @@ const handler = async (req, res) => {
                     codeExpires: new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
                 });
                 await user.save({ validateBeforeSave: false });
-                res.json({
+                return res.json({
                     message: "please check your email"
                 });
             });
