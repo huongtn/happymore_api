@@ -17,11 +17,16 @@ const handler = async (req, res) => {
     let user = await dbContext.User.findOne({ email: req.body.email });
 
     if (!user) {
-        res.status(400).json({
+        return res.status(400).json({
             message: "email not existed!"
         });
     }
     else {
+        if (!user.active) {
+            return res.status(400).json({
+                message: "the account not active yet!"
+            });
+        }
         makeSalt(function (saltErr, salt) {
             if (saltErr) {
                 next(saltErr);
