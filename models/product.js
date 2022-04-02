@@ -17,6 +17,12 @@ module.exports = (mongoose) => {
       discount: {
         type: Number
       },
+      discountFromDate: {
+        type: Date
+      },
+      discountToDate: {
+        type: Date
+      },
       images: {
         type: [String]
       },
