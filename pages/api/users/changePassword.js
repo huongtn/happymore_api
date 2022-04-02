@@ -1,5 +1,7 @@
 import dbConnect from '../../../utils/db_connect';
 import dbContext from '../../../models/db_context';  
+
+import { makeSalt, encryptPassword } from '../../../utils/crypto_password'
 dbConnect();
 
 const handler = async (req, res) => {
