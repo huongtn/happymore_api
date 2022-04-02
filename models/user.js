@@ -105,24 +105,20 @@ module.exports = (mongoose) => {
       },
       active: {
         type: Boolean,
-        default: false,
-        select: false,
+        //default: false
       },
       refreshTokens: [refreshToken],
       address: [addressSchema],
       bankAccount: bankAcountSchema,
       // Tổng doanh số
       totalSales: {
-        type: Number,
-        default: 0,
+        type: Number
       },
       totalIncome: {
-        type: Number,
-        default: 0,
+        type: Number
       },
       unpaidIncome: {
-        type: Number,
-        default: 0,
+        type: Number
       },
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
