@@ -2,7 +2,7 @@ import dbConnect from '../../../utils/db_connect';
 import dbContext from '../../../models/db_context';
 import { makeSalt, encryptPassword } from '../../../utils/crypto_password'
 import { sendEmail } from '../../../utils/email_client';
-import { generate ,generateVerifyCode} from '../../../utils/generate_code'; 
+import { generate, generateVerifyCode } from '../../../utils/generate_code';
 dbConnect();
 
 const handler = async (req, res) => {
@@ -13,8 +13,8 @@ const handler = async (req, res) => {
             .json({ success: false, message: 'Only POST requests are allowed.' });
     }
     // Get user based on POSTed phoneNumber
-    let user = await dbContext.User.findOne({ email: req.body.email }); 
-    if (user) { 
+    let user = await dbContext.User.findOne({ email: req.body.email });
+    if (user) {
         return res.status(400).json({
             message: "email already existed!"
         });
@@ -29,8 +29,15 @@ const handler = async (req, res) => {
                     next(encryptErr);
                 }
                 req.body.password = hashedPassword;
-                const code =generateVerifyCode(req.body.email);
-                sendEmail(req.body.email, "Happy more code", code);
+                const code = generateVerifyCode(req.body.email);
+                try {
+                    sendEmail(req.body.email, "Happy more code", code);
+                } catch (error) {
+                    console.log(error);
+                }
+
+
+
                 user = await dbContext.User.create({
                     email: req.body.email,
                     password: req.body.password,
