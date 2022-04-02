@@ -20,40 +20,39 @@ const handler = async (req, res) => {
         });
     }
     else {
-        makeSalt(function (saltErr, salt) {
-            if (saltErr) {
-                next(saltErr);
-            }
-            encryptPassword(req.body.password, async function (encryptErr, hashedPassword) {
-                if (encryptErr) {
-                    next(encryptErr);
+        try {
+            makeSalt(function (saltErr, salt) {
+                if (saltErr) {
+                    next(saltErr);
                 }
-                req.body.password = hashedPassword;
-                const code = generateVerifyCode(req.body.email);
-                try {
+                encryptPassword(req.body.password, async function (encryptErr, hashedPassword) {
+                    if (encryptErr) {
+                        next(encryptErr);
+                    }
+                    req.body.password = hashedPassword;
+                    const code = generateVerifyCode(req.body.email);
+
                     sendEmail(req.body.email, "Happy more code", code);
-                } catch (error) {
-                    console.log(error);
-                } 
-                user = await dbContext.User.create({
-                    email: req.body.email,
-                    password: req.body.password,
-                    agentCode: generate(6),
-                    parentAgentCode: req.body.parentAgentCode,
-                    code: code,
-                    codeExpires: new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
+
+                    user = await dbContext.User.create({
+                        email: req.body.email,
+                        password: req.body.password,
+                        agentCode: generate(6),
+                        parentAgentCode: req.body.parentAgentCode,
+                        code: code,
+                        codeExpires: new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
+                    });
+                    await user.save({ validateBeforeSave: false }); 
+                    return res.json({
+                        message: "please check your email"
+                    });
                 });
-                await user.save({ validateBeforeSave: false });
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.write(JSON.stringify({
-                    message: "please check your email"
-                }));
-                res.end();
-                // return res.json({
-                //     message: "please check your email"
-                // });
+            })
+        } catch (error) {
+            return res.status(200).json({
+                message: error
             });
-        })
+        }
     }
 }
 export default handler;
