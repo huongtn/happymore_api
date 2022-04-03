@@ -23,7 +23,7 @@ const handler = async (req, res) => {
     }
     else {
         if (!user.active) {
-            return res.status(400).json({
+            return res.status(202).json({
                 message: "the account not active yet!"
             });
         }
