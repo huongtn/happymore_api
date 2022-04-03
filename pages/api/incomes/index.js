@@ -28,6 +28,16 @@ const handler = async (req, res) => {
     case "POST":
       req.body.fromUser = req.user.id;
       await dbContext.Income.create(req.body);
+      await dbContext.Notification.create(
+        {
+          title: 'Bạn vừa được thanh toán tiền hoa hồng',
+          description: `Số tiền ${req.body.amount}`,
+          url: '',
+          user: req.body.user,
+          type: "SettlePayment",
+          images:[]
+      }
+      );
       return res.status(200).json({
         success: true,
         message: 'Saving successful!',
