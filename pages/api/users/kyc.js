@@ -1,6 +1,7 @@
 import dbConnect from '../../../utils/db_connect';
 import dbContext from '../../../models/db_context';
 import withProtect from '../../../middleware/with_protect';
+import { incomeAgg } from '../../../helpers/income_agg';
 dbConnect();
 
 const handler = async (req, res) => {
@@ -31,8 +32,24 @@ const handler = async (req, res) => {
             res.json({
                 message: "update successful!"
             });
-        } else {
-            res.json(user);
+        } else { 
+            let myUser = {
+                ...user._doc,
+                totalIncome: 0,
+                paidIncome: 0
+            };
+            const incomes = await incomeAgg(dbContext, myUser._id);
+            if (incomes.length > 0) {
+                for (let income of incomes) {
+                    if (income.amount > 0) {
+                        myUser.totalIncome = income.amount;
+                    }
+                    else {
+                        myUser.paidIncome = (-1)*income.amount;
+                    }
+                }
+            }
+            res.json(myUser);
         }
     }
 }
