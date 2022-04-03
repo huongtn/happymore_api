@@ -14,9 +14,8 @@ module.exports = (mongoose) => {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Order',
             },
-            orderAmount: {
-                type: Number,
-                required: [true, 'Amount is required'],
+            amount: {
+                type: Number
             },
             percentage: {
                 type: Number

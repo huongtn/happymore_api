@@ -15,16 +15,27 @@ const handler = async (req, res) => {
         incomes = await dbContext.Income.find({ user: req.user.id }).populate('fromUser');
       }
       else {
-        incomes = await dbContext.Income.find(condition).populate('user').populate('fromUser');
+        const { userId } = req.query;
+        if (!userId)
+          incomes = await dbContext.Income.find({ user: userId }).populate('user').populate('fromUser');
+        else
+          incomes = await dbContext.Income.find().populate('user').populate('fromUser');
       }
       return res
         .status(200)
         .json(incomes);
 
+    case "POST":
+      req.body.fromUser = req.user.id;
+      await dbContext.Income.create(req.body);
+      return res.status(200).json({
+        success: true,
+        message: 'Saving successful!',
+      });
     default:
       return res
         .status(400)
-        .json({ success: false, message: 'Only GET requests are allowed.' });
+        .json({ success: false, message: 'Only GET/POST requests are allowed.' });
   }
 };
 //export default handler;

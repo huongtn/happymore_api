@@ -36,7 +36,7 @@ const handler = async (req, res) => {
               {
                 user: f1.id,
                 fromUser: updateOrder.user,
-                orderAmount: updateOrder.amount,
+                amount: updateOrder.amount,
                 percentage: appConfig.FIncome[0],
                 order: req.body.id,
                 note
@@ -48,7 +48,7 @@ const handler = async (req, res) => {
                 {
                   user: f2.id,
                   fromUser: updateOrder.user,
-                  orderAmount: updateOrder.amount,
+                  amount: updateOrder.amount,
                   percentage: appConfig.FIncome[1],
                   order: req.body.id,
                   note
@@ -60,7 +60,7 @@ const handler = async (req, res) => {
                   {
                     user: f3.id,
                     fromUser: updateOrder.user,
-                    orderAmount: updateOrder.amount,
+                    amount: updateOrder.amount,
                     percentage: appConfig.FIncome[2],
                     order: req.body.id,
                     note
@@ -72,7 +72,7 @@ const handler = async (req, res) => {
                     {
                       user: f4.id,
                       fromUser: updateOrder.user,
-                      orderAmount: updateOrder.amount,
+                      amount: updateOrder.amount,
                       percentage: appConfig.FIncome[3],
                       order: req.body.id,
                       note
@@ -84,7 +84,7 @@ const handler = async (req, res) => {
                       {
                         user: f5.id,
                         fromUser: updateOrder.user,
-                        orderAmount: updateOrder.amount,
+                        amount: updateOrder.amount,
                         percentage: appConfig.FIncome[4],
                         order: req.body.id,
                         note
