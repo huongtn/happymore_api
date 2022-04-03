@@ -31,7 +31,7 @@ const handler = async (req, res) => {
       await dbContext.Notification.create(
         {
           title: 'Bạn vừa được thanh toán tiền hoa hồng',
-          description: `Số tiền ${req.body.amount}`,
+          description: `Số tiền ${-1*req.body.amount}`,
           url: '',
           user: req.body.user,
           type: "SettlePayment",
