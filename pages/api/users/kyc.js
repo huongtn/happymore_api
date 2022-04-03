@@ -32,7 +32,7 @@ const handler = async (req, res) => {
             res.json({
                 message: "update successful!"
             });
-        } else { 
+        } else {
             let myUser = {
                 ...user._doc,
                 totalIncome: 0,
@@ -45,7 +45,7 @@ const handler = async (req, res) => {
                         myUser.totalIncome = income.amount;
                     }
                     else {
-                        myUser.paidIncome = (-1)*income.amount;
+                        myUser.paidIncome = (-1) * income.amount;
                     }
                 }
             }
