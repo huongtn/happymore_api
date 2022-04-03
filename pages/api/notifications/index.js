@@ -10,7 +10,7 @@ const handler = async (req, res) => {
   const { method } = req;
   switch (method) {
     case "GET": 
-    const notifications = await dbContext.Notification.find({ user: req.user.id }); 
+    const notifications = await dbContext.Notification.find({$or:[{user: req.user.id },{type:"News"}]}); 
     return res
       .status(200)
       .json(notifications);
