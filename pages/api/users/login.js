@@ -18,13 +18,18 @@ const handler = async (req, res) => {
 
     if (!user) {
         return res.status(400).json({
-            message: "email not existed!"
+            message: "Email chưa được đăng ký!"
         });
     }
     else {
         if (!user.active) {
             return res.status(202).json({
-                message: "the account not active yet!"
+                message: "Tài khoản chưa được xác nhận email!"
+            });
+        }
+        if (!user.approval) {
+            return res.status(400).json({
+                message: "Tài khoản chưa được phê duyệt!"
             });
         }
         makeSalt(function (saltErr, salt) {

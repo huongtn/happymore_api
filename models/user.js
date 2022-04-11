@@ -107,6 +107,10 @@ module.exports = (mongoose) => {
         type: Boolean,
         //default: false
       },
+      approval: {
+        type: Boolean,
+        //default: false
+      },
       refreshTokens: [refreshToken],
       address: [addressSchema],
       bankAccount: bankAcountSchema,
