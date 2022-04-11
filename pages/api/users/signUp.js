@@ -40,6 +40,7 @@ const handler = async (req, res) => {
                         agentCode,
                         parentAgentCode: req.body.parentAgentCode,
                         code,
+                        phoneNumber:req.body.phoneNumber,
                         codeExpires: new Date((new Date()).getTime() + (1000 * process.env.CODE_VERIFY_EXPIRED_SECONDS))
                     });
                     await user.save({ validateBeforeSave: false }); 
