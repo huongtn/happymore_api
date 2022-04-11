@@ -22,7 +22,7 @@ const handler = async (req, res) => {
         else {
             user.approval = true;
             await user.save({ validateBeforeSave: false });
-            res.json({ token });
+            res.json({ message:'Phê duyệt thành công!' });
         }
     }
     else {
