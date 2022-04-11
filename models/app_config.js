@@ -18,6 +18,7 @@ module.exports = (mongoose) => {
       deliveryFee: {
         type: Number
       },
+      slices: [String],
     },
     { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
   );
