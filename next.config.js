@@ -3,7 +3,8 @@ module.exports = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://api.example.com/:path*',
+        //https://happymore-api-git-master-huongtn.vercel.app/api/users/login
+        destination: 'https://happymore-api-git-master-huongtn.vercel.app/api/:path*',
       },
     ]
   },
