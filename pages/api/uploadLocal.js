@@ -14,7 +14,7 @@ const handler = nc(onError);
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "public/images");
+        cb(null, "public");
     },
     filename: function (req, file, cb) {
         cb(
@@ -34,7 +34,7 @@ handler.post(async (req, res) => {
     // fs.unlinkSync(filePath);
     let url = "http://" + req.headers.host; 
     res.status(200).send({ 
-        url: url + "/public/images/" + req.file.filename,
+        url: url + "/public/" + req.file.filename,
     });
 });
 
