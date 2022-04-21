@@ -1,32 +1,17 @@
+// next.config.js
 module.exports = {
-  async rewrites() {
+  async headers() {
     return [
       {
-        source: '/api/:path*',
-        //https://happymore-api-git-master-huongtn.vercel.app/api/users/login
-        destination: 'https://happymore-api-git-master-huongtn.vercel.app/api/:path*',
-      },
+        // matching all API routes
+        source: "/api/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          { key: "Access-Control-Allow-Methods", value: "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
+          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
+        ]
+      }
     ]
-  },
-  experimental: {
-    outputStandalone: true,
-  },
-  // publicRuntimeConfig: {
-  //   database: process.env['DATABASE'],
-  //   jwtSecret: process.env.JWT_SECRET,
-  //   codeVerifyExpiredSeconds: process.env.CODE_VERIFY_EXPIRED_SECONDS,
-  //   twilio:
-  //   {
-  //     accountSid: process.env.TWILIO_ACCOUNTSID,
-  //     authToken: process.env.TWILIO_AUTHTOKEN,
-  //     phoneNumber: process.env.TWILIO_PHONENUMBER,
-  //   },
-  //   mqtt:
-  //   {
-  //     Con: process.env.Mqtt_Con,
-  //     UserName: process.env.Mqtt_UserName,
-  //     Password: process.env.Mqtt_Password,
-  //     Port: process.env.Mqtt_Port
-  //   }
-  // }
-}
+  }
+};
