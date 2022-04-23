@@ -1,4 +1,5 @@
 const validator = require('validator');
+import {UserRolesE}  from '../models/enum'
 module.exports = (mongoose) => {
   const refreshToken = new mongoose.Schema({
     token: {
@@ -83,7 +84,7 @@ module.exports = (mongoose) => {
       },
       role: {
         type: String,
-        enum: ['Admin', 'Manager', 'User', 'Agent'],
+        enum: UserRolesE,
         default: 'Agent',
       },
       authLoginToken: {
