@@ -14,7 +14,7 @@ const handler = async (req, res) => {
       });
     case "GET": 
       if (!id) {
-        const users = await dbContext.User.find({});
+        const users = await dbContext.User.find({}).sort({role:-1});
         return res
           .status(200)
           .json(users);
